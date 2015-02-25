@@ -1,0 +1,9 @@
+Android GPS questions:
+
+1. Is the remote server a web application?
+	- How does that work?
+
+2. How do the Manifest file and Readme differ?
+
+3. Why does the server save a file and then open it again?
+	- Are there two different programs here?
