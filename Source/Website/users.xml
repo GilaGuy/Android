@@ -1,0 +1,22 @@
+<users>
+	<user>
+		<id>1</id>
+		<lat>49</lat>
+		<long>-123</long>
+	</user>
+	<user>
+		<id>2</id>
+		<lat>49</lat>
+		<long>-122</long>
+	</user>
+	<user>
+		<id>3</id>
+		<lat>49.3</lat>
+		<long>-123</long>
+	</user>
+	<user>
+		<id>4</id>
+		<lat>49.3</lat>
+		<long>-122.9</long>
+	</user>
+</users>

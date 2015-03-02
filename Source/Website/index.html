@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en">
+
+	<head>
+		<title>GPS Website</title>
+
+		<meta charset="utf-8" />
+		<meta name="description" content="Putting users on the map" />
+		<meta name="author" content="Data Communications 2015" />
+
+		<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+		<!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+
+		<script src="javascript/jquery-2.1.3.min.js"></script>
+		 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+		<script src="javascript/gps.js"></script>
+	</head>
+	
+	<body>
+
+		<div id="information">
+			<h1>GPS Website</h1>
+			<h2>Putting Users on the Map</h2>
+			<p>This website displays the location of mobile users on a Google 
+			Map.</p>
+
+			<h2>Active Users</h2>
+			<table id="users">
+				<thead>
+					<th>User ID</th>
+					<th>Latitude</th>
+					<th>Longitude</th>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="map-container">
+			<div id="map-canvas"></div>
+		</div>	
+
+		<div class="footer">
+			<p>Chris Klassen - Melvin Loho - Joel Mabbott - Jonathan Chu</p>
+		</div>
+	</body>
+
+</html>
