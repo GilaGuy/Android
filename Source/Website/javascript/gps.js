@@ -33,7 +33,7 @@ var markers = new Array();
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: $(document.ready)
 --
--- DATE: January 10, 2015
+-- DATE: March 1, 2015
 --
 -- REVISIONS: (Date and Description)
 --
@@ -62,7 +62,7 @@ $(document).ready(function()
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: initialize
 --
--- DATE: January 10, 2015
+-- DATE: March 1, 2015
 --
 -- REVISIONS: (Date and Description)
 --
@@ -92,7 +92,7 @@ function initialize() {
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: getLocation
 --
--- DATE: January 10, 2015
+-- DATE: March 1, 2015
 --
 -- REVISIONS: (Date and Description)
 --
@@ -121,7 +121,7 @@ function getLocation() {
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: loadUsers
 --
--- DATE: January 10, 2015
+-- DATE: March 1, 2015
 --
 -- REVISIONS: (Date and Description)
 --
@@ -184,7 +184,7 @@ function loadUsers()
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: showPosition
 --
--- DATE: January 10, 2015
+-- DATE: March 1, 2015
 --
 -- REVISIONS: (Date and Description)
 --
@@ -214,7 +214,7 @@ function showPosition(pos)
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: addUser
 --
--- DATE: January 10, 2015
+-- DATE: March 1, 2015
 --
 -- REVISIONS: (Date and Description)
 --
@@ -246,7 +246,7 @@ function addUser(user)
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: placeMarker
 --
--- DATE: January 10, 2015
+-- DATE: March 1, 2015
 --
 -- REVISIONS: (Date and Description)
 --
