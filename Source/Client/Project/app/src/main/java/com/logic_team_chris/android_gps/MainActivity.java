@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,7 +71,9 @@ public class MainActivity extends ActionBarActivity {
             // Send the packet
             try {
                 ClientSocket.send(dgram);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                
+            }
         }
 
         @Override
