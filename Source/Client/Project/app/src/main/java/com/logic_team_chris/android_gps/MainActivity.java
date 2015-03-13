@@ -70,9 +70,15 @@ public class MainActivity extends ActionBarActivity {
             dgram = new DatagramPacket(PacketData, PacketData.length, Addr, ServerPort);
 
             // Send the packet
-            try {
-                ClientSocket.send(dgram);
-            } catch (Exception e) {}
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    try {
+                        ClientSocket.send(dgram);
+                    } catch (Exception e) {}
+                    return null;
+                }
+            };
         }
 
         @Override
