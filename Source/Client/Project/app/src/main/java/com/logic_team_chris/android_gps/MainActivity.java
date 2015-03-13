@@ -70,22 +70,9 @@ public class MainActivity extends ActionBarActivity {
             dgram = new DatagramPacket(PacketData, PacketData.length, Addr, ServerPort);
 
             // Send the packet
-            new AsyncTask<Void, String, Void>() {
-                @Override
-                protected Void doInBackground(Void... params) {
-                    try {
-                        ClientSocket.send(dgram);
-                    } catch (Exception e) {
-                        publishProgress(e.getMessage());
-                    }
-                    return null;
-                }
-
-                @Override
-                protected void onProgressUpdate(String... progress) {
-                    Toast.makeText(MainActivity.this, progress[0], Toast.LENGTH_LONG).show();
-                }
-            };
+            try {
+                ClientSocket.send(dgram);
+            } catch (Exception e) {}
         }
 
         @Override
