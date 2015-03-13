@@ -16,9 +16,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Server IP"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:id="@+id/textView" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +28,10 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText" />
+            android:id="@+id/input_serverIP"
+            android:digits="0123456789."
+            android:inputType="none"
+            android:hint="localhost" />
 
     </LinearLayout>
 
@@ -59,11 +60,42 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2"
+            android:id="@+id/input_serverPort"
             android:singleLine="true"
             android:inputType="number"
             android:maxLength="5"
             android:hint="80" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="My ID"
+            android:id="@+id/textView4"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=":"
+            android:id="@+id/textView5" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_myID"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:inputType="none" />
     </LinearLayout>
 
     <Button
@@ -71,10 +103,10 @@
         android:layout_height="wrap_content"
         android:text="Connect"
         android:id="@+id/btn_connect"
-        android:layout_below="@+id/linearLayout2"
+        android:onClick="onConnect"
+        android:layout_below="@+id/linearLayout3"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onConnect" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"

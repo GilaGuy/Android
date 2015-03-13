@@ -1,6 +1,10 @@
 package com.logic_team_chris.android_gps;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
@@ -17,27 +21,83 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class MainActivity extends ActionBarActivity {
-
     static final int DATAGRAM_SIZE = 1024;
+    static final int UPDATE_INTERVAL = 5 * 1000;
 
-    String ServerName;
-    int ServerPort;
-    String ClientString = "Hello World!!";
-    String ServerString;
-    byte[] PacketData;
     InetAddress Addr;
     DatagramSocket ClientSocket;
-    DatagramPacket dgram;
     boolean isConnected = false;
 
-    static int counter = 0;
+    String ClientString;
+    byte[] PacketData;
+    DatagramPacket dgram;
+
+    String ServerIP;
+    int ServerPort;
+    String MyID;
+
+    LocationListener locationListener = new MyLocationListener();
+    LocationManager locationManager;
+
+    public String createMessage(Location l)
+    {
+        String msg;
+
+        msg =
+                MyID
+                + '`'
+                + l.getLatitude()
+                + '`'
+                + l.getLongitude()
+                + '`'
+                + l.getTime()
+                ;
+
+        return msg;
+    }
+
+    private final class MyLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location l) {
+            // Create message string
+            ClientString = createMessage(l);
+
+            // Create packet data
+            PacketData = new byte[DATAGRAM_SIZE];
+            System.arraycopy(ClientString.getBytes(), 0, PacketData, 0, ClientString.length());
+
+            // Create datagram packet
+            dgram = new DatagramPacket(PacketData, PacketData.length, Addr, ServerPort);
+
+            // Send the packet
+            try {
+                ClientSocket.send(dgram);
+            } catch (Exception e) {}
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,15 +129,31 @@ public class MainActivity extends ActionBarActivity {
         isConnected = !isConnected;
 
         if (isConnected) {
-            // Get the IP address of the Server
+            // Get the values from the editTexts
+            ServerIP = ((EditText)findViewById(R.id.input_serverIP)).getText().toString();
+            String strPort = ((EditText)findViewById(R.id.input_serverPort)).getText().toString();
+            if (strPort.isEmpty())
+                strPort = ((EditText)findViewById(R.id.input_serverPort)).getHint().toString();
+
+            ServerPort = Integer.valueOf(strPort);
+
+            MyID = ((EditText)(findViewById(R.id.input_myID))).getText().toString();
+            if (MyID.isEmpty()) {
+                Toast.makeText(this, "Enter your ID.", Toast.LENGTH_LONG).show();
+                isConnected = false;
+                return;
+            }
+
+            // Get the InetAddress object from the Server IP
             try {
-                Addr = InetAddress.getByName(ServerName);
+                Addr = InetAddress.getByName(ServerIP);
             } catch (Exception e) {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                 isConnected = false;
                 return;
             }
 
+            // Create the socket
             try {
                 ClientSocket = new DatagramSocket();
             } catch (Exception e) {
@@ -86,34 +162,30 @@ public class MainActivity extends ActionBarActivity {
                 return;
             }
 
-            PacketData = new byte[DATAGRAM_SIZE];
-            System.arraycopy(ClientString.getBytes(), 0, PacketData, 0, ClientString.length());
+            // Start updating my location
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_INTERVAL, 10, locationListener);
 
-            // Create the complete datagram
-            dgram = new DatagramPacket(PacketData, PacketData.length, Addr, ServerPort);
-
-            new SendDataPeriodically().execute();
+            //Disable fields
+            findViewById(R.id.input_serverIP).setEnabled(false);
+            findViewById(R.id.input_serverPort).setEnabled(false);
+            findViewById(R.id.input_myID).setEnabled(false);
 
             ((TextView)findViewById(R.id.btn_connect)).setText("Disconnect");
         }
         else
         {
-            ClientSocket.disconnect();
+            // Close the socket
+            ClientSocket.close();
+
+            // Stop updating my location
+            locationManager.removeUpdates(locationListener);
+
+            //Enable fields
+            findViewById(R.id.input_serverIP).setEnabled(true);
+            findViewById(R.id.input_serverPort).setEnabled(true);
+            findViewById(R.id.input_myID).setEnabled(true);
 
             ((TextView)findViewById(R.id.btn_connect)).setText("Connect");
-
-            Toast.makeText(this, "" + MainActivity.counter, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private class SendDataPeriodically extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... params) {
-            MainActivity.counter = 0;
-            while(isConnected && MainActivity.counter < Integer.MAX_VALUE) {
-                ++MainActivity.counter;
-            }
-            return null;
         }
     }
 }
