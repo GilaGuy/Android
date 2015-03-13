@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
@@ -69,11 +70,22 @@ public class MainActivity extends ActionBarActivity {
             dgram = new DatagramPacket(PacketData, PacketData.length, Addr, ServerPort);
 
             // Send the packet
-            try {
-                ClientSocket.send(dgram);
-            } catch (Exception e) {
-                
-            }
+            new AsyncTask<Void, String, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    try {
+                        ClientSocket.send(dgram);
+                    } catch (Exception e) {
+                        publishProgress(e.getMessage());
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onProgressUpdate(String... progress) {
+                    Toast.makeText(MainActivity.this, progress[0], Toast.LENGTH_LONG).show();
+                }
+            };
         }
 
         @Override
