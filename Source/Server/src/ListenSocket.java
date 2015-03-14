@@ -23,16 +23,31 @@
 
 import java.net.*;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.TimeZone;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.io.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 
 public class ListenSocket extends Thread 
 {
 	static final int DATAGRAM_SIZE = 1024;
 	static final int MESSAGE_FIELDS = 3;
+	static final String OUTPUT_FILE = "users.xml";
 
 	private DatagramSocket socket;
 	private boolean done;
@@ -115,7 +130,7 @@ public class ListenSocket extends Thread
 			packetData = new byte[DATAGRAM_SIZE];
 			clientPacket = new DatagramPacket(packetData, DATAGRAM_SIZE);
 			
-			try 
+			/*try 
 			{
 				// Receive a datagram from a client
 				socket.receive(clientPacket);
@@ -135,16 +150,24 @@ public class ListenSocket extends Thread
 				clientData.setTime(dateFormat.format(cal.getTime()));
 				
 				// Parse the client message
-				parseMessage(clientData, clientMessage);
+				parseMessage(clientData, clientMessage); */
+				
+				clientData = new Message("127.0.0.1");
+				clientData.setId("5");
+				clientData.setLatitude("49");
+				clientData.setLongitude("-123");
+				clientData.setTime("March 13");
 				
 				// Save the client data to the xml file
 				saveData(clientData);
-			}
+				
+				done = true;
+			/*}
 			catch (IOException e) 
 			{
 				e.printStackTrace();
 				break;
-			}
+			}*/
 		}
 		
 		// Close socket
@@ -188,28 +211,94 @@ public class ListenSocket extends Thread
 	
 	
 	/*------------------------------------------------------------------------------------------------------------------
-	-- FUNCTION: 
+	-- FUNCTION: saveData
 	--
-	-- DATE: 
+	-- DATE: March 13, 2015
 	--
 	-- REVISIONS: (Date and Description)
 	--
-	-- DESIGNER: 
+	-- DESIGNER: Chris Klassen
 	--
-	-- PROGRAMMER: 
+	-- PROGRAMMER: Chris Klassen
 	--
 	-- INTERFACE: private void saveData(Message cData);
 	--
 	-- PARAMETERS:
-	--		
+	--		cData - the control data structure to save
 	--
-	-- RETURNS: 
+	-- RETURNS: void
 	--
 	-- NOTES:
-	--     This function 
+	--     This function updates the xml document to add/change a user.
 	----------------------------------------------------------------------------------------------------------------------*/
 	private void saveData(Message cData)
 	{
+		try
+		{
+			// Open the file
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(OUTPUT_FILE);
+			
+			// Get a list of users			
+			NodeList users = doc.getElementsByTagName("user");
+			
+			// Loop through the users and see if our user already exists
+			for (int i = 0; i < users.getLength(); i++)
+			{
+				Element user = (Element) users.item(i);
+				
+				// If this user already exists
+				if (user.getElementsByTagName("id").item(0).getTextContent().equals(cData.getId()))
+				{
+					user.getElementsByTagName("lat").item(0).setTextContent(cData.getLatitude());
+					user.getElementsByTagName("long").item(0).setTextContent(cData.getLongitude());
+					user.getElementsByTagName("time").item(0).setTextContent(cData.getTime());
 
+					// Save the updated file
+					TransformerFactory transformerFactory = TransformerFactory.newInstance();
+					Transformer transformer = transformerFactory.newTransformer();
+					DOMSource source = new DOMSource(doc);
+					StreamResult result = new StreamResult(new File(OUTPUT_FILE));
+					transformer.transform(source, result);
+					return;
+				}
+			}
+			
+			// If our user does not exist yet, create one
+			Node newUser = doc.createElement("user");
+			Element newId = doc.createElement("id");
+			newId.appendChild(doc.createTextNode(cData.getId()));
+			Element newIP = doc.createElement("ip");
+			newIP.appendChild(doc.createTextNode(cData.getIP()));
+			Element newLat = doc.createElement("lat");
+			newLat.appendChild(doc.createTextNode(cData.getLatitude()));
+			Element newLong = doc.createElement("long");
+			newLong.appendChild(doc.createTextNode(cData.getLongitude()));
+			Element newTime = doc.createElement("time");
+			newTime.appendChild(doc.createTextNode(cData.getTime()));
+			
+			newUser.appendChild(newId);
+			newUser.appendChild(newIP);
+			newUser.appendChild(newLat);
+			newUser.appendChild(newLong);
+			newUser.appendChild(newTime);
+
+			// Add the new user to the document
+			doc.getElementsByTagName("users").item(0).appendChild(newUser);
+			
+			// Save the updated file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File(OUTPUT_FILE));
+			transformer.transform(source, result);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Failed to save to file.");
+			return;
+		}
+		
 	}
 }
