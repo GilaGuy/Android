@@ -31,6 +31,11 @@ public class Message {
 		time = t;
 	}
 	
+	public String getIP()
+	{
+		return ip;
+	}
+	
 	public String getId()
 	{
 		return id;

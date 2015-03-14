@@ -1,4 +1,9 @@
 import java.net.*;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.io.*;
 
 public class ListenSocket extends Thread 
@@ -55,7 +60,13 @@ public class ListenSocket extends Thread
 				
 				// Retrieve the message from the packet
 				clientMessage = new String(packetData, 0, clientPacket.getLength());
-				System.out.println("Message received: " + clientMessage);
+				
+				// Retrieve the current time
+				Calendar cal = Calendar.getInstance();
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				dateFormat.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
+				
+				clientData.setTime(dateFormat.format(cal.getTime()));
 				
 				// Parse the client message
 				parseMessage(clientData, clientMessage);
@@ -84,15 +95,12 @@ public class ListenSocket extends Thread
 		cData.setLatitude(msg.substring(0, msg.indexOf('`')));
 		msg = msg.substring(msg.indexOf('`') + 1, msg.length());
 
-		cData.setLongitude(msg.substring(0, msg.indexOf('`')));
-		msg = msg.substring(msg.indexOf('`') + 1, msg.length());
-
-		cData.setTime(msg.substring(0, msg.length()));
+		cData.setLongitude(msg.substring(0, msg.length()));
 	}
 	
 	
 	private void saveData(Message cData)
 	{
-		
+
 	}
 }
