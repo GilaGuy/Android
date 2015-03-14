@@ -1,5 +1,11 @@
 ---------------------------------------------
 | Data Communications Assignment 3 - README |
+|                                           |
+|                Chris Klassen              |
+|                 Melvin Loho               |
+|                Jonathan Chu               |
+|                Joel Mabbott               |
+|                                           |
 ---------------------------------------------
 
 This document intends to identify all modules of the assignment, and to explain how they need to be set up in order to have a working project.
