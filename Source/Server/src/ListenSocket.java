@@ -1,3 +1,26 @@
+/*------------------------------------------------------------------------------------------------------------------
+-- SOURCE FILE: ListenSocket.java - This file contains all Server socket and data parsing functions
+--
+-- PROGRAM: gps_server.jar
+--
+-- FUNCTIONS:
+--		public ListenSocket(int p);
+--		public void run();
+--		private void parseMessage(Message cData, String msg);
+--		private void saveData(Message cData);
+--
+-- DATE: March 3, 2015
+--
+-- REVISIONS: (Date and Description)
+--
+-- DESIGNER: Chris Klassen
+--
+-- PROGRAMMER: Chris Klassen
+--
+-- NOTES: All data received from clients is in UDP format. This data is then placed in an
+-- XML document.
+----------------------------------------------------------------------------------------------------------------------*/
+
 import java.net.*;
 import java.util.Calendar;
 import java.util.Locale;
@@ -22,13 +45,56 @@ public class ListenSocket extends Thread
 	private DatagramPacket clientPacket;
 	private InetAddress clientAddress;
 
+	/*------------------------------------------------------------------------------------------------------------------
+	-- FUNCTION: ListenSocket
+	--
+	-- DATE: March 3, 2015
+	--
+	-- REVISIONS: (Date and Description)
+	--
+	-- DESIGNER: Chris Klassen
+	--
+	-- PROGRAMMER: Chris Klassen
+	--
+	-- INTERFACE: public ListenSocket(int p);
+	--
+	-- PARAMETERS:
+	--		p - the port to listen on.
+	--
+	-- RETURNS: nothing
+	--
+	-- NOTES:
+	--     This function creates the listener with a specified port. 
+	----------------------------------------------------------------------------------------------------------------------*/
 	public ListenSocket(int p) throws IOException 
 	{
 		done = false;
 		port = p;
 		socket = new DatagramSocket(p);
 	}
+	
 
+	/*------------------------------------------------------------------------------------------------------------------
+	-- FUNCTION: run
+	--
+	-- DATE: March 3, 2015
+	--
+	-- REVISIONS: (Date and Description)
+	--
+	-- DESIGNER: Chris Klassen
+	--
+	-- PROGRAMMER: Chris Klassen
+	--
+	-- INTERFACE: public void run();
+	--
+	-- PARAMETERS:
+	--
+	-- RETURNS: void
+	--
+	-- NOTES:
+	--     This function is the entry point for the thread. It handles the receive loop
+	--     and calls the parsing and saving commands.
+	----------------------------------------------------------------------------------------------------------------------*/
 	public void run() {
 		// Print startup message
 		System.out.println("Starting up on port " + port);
@@ -86,6 +152,28 @@ public class ListenSocket extends Thread
 	}
 	
 	
+	/*------------------------------------------------------------------------------------------------------------------
+	-- FUNCTION: parseMessage
+	--
+	-- DATE: March 3, 2015
+	--
+	-- REVISIONS: (Date and Description)
+	--
+	-- DESIGNER: Chris Klassen
+	--
+	-- PROGRAMMER: Chris Klassen
+	--
+	-- INTERFACE: private void parseMessage(Message cData, String msg);
+	--
+	-- PARAMETERS:
+	--		cData - the control data structure containing client info
+	--		msg - the message to parse into the structure
+	--
+	-- RETURNS: void
+	--
+	-- NOTES:
+	--     This function parses a client control message into a data structure.
+	----------------------------------------------------------------------------------------------------------------------*/
 	private void parseMessage(Message cData, String msg)
 	{
 		// Pull the data from the string
@@ -99,6 +187,27 @@ public class ListenSocket extends Thread
 	}
 	
 	
+	/*------------------------------------------------------------------------------------------------------------------
+	-- FUNCTION: 
+	--
+	-- DATE: 
+	--
+	-- REVISIONS: (Date and Description)
+	--
+	-- DESIGNER: 
+	--
+	-- PROGRAMMER: 
+	--
+	-- INTERFACE: private void saveData(Message cData);
+	--
+	-- PARAMETERS:
+	--		
+	--
+	-- RETURNS: 
+	--
+	-- NOTES:
+	--     This function 
+	----------------------------------------------------------------------------------------------------------------------*/
 	private void saveData(Message cData)
 	{
 
