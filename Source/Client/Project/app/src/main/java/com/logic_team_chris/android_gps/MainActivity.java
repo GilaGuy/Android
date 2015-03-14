@@ -48,7 +48,8 @@ public class MainActivity extends ActionBarActivity {
                 + '`'
                 + l.getLatitude()
                 + '`'
-                + l.getLongitude();
+                + l.getLongitude()
+                + '`';
 
         return msg;
     }
