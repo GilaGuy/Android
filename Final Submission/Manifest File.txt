@@ -12,6 +12,9 @@ WEBSITE
 The following files are required to run the website:
 
 	- Website/index.html
+	- Website/.htaccess
+	- Website/.htpasswd
+	- Website/users.xml
 	- Website/javascript/gps.js
 	- Website/javascript/jquery-2.1.3.min.js
 	- Website/css/Cabin.ttf

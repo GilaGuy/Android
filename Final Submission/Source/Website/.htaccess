@@ -1,0 +1,5 @@
+AuthUserFile /home/teamchris/public_html/.htpasswd
+AuthGroupFile /dev/null
+AuthName "GPS Website"
+AuthType Basic
+require valid-user
