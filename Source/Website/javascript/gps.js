@@ -167,6 +167,7 @@ function loadUsers()
 	{
 		// Create a new user
 		var user = {
+			uIP: users[i].getElementsByTagName("ip")[0].childNodes[0].nodeValue,
 			uId: users[i].getElementsByTagName("id")[0].childNodes[0].nodeValue,
 			lat: users[i].getElementsByTagName("lat")[0].childNodes[0].nodeValue,
 			lon: users[i].getElementsByTagName("long")[0].childNodes[0].nodeValue,
@@ -235,7 +236,7 @@ function showPosition(pos)
 function addUser(user)
 {
 	// Add the user to the table
-	$('#users > tbody:last').append('<tr><td>' + user.uId + '</td><td>' + user.lat + '</td><td>' 
+	$('#users > tbody:last').append('<tr><td>' + user.uIP + '</td><td>' + user.uId + '</td><td>' + user.lat + '</td><td>' 
 		+ user.lon + '</td><td>' + user.time + '</td></tr>');
 
 	// Place the marker
