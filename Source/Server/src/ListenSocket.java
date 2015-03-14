@@ -130,7 +130,7 @@ public class ListenSocket extends Thread
 			packetData = new byte[DATAGRAM_SIZE];
 			clientPacket = new DatagramPacket(packetData, DATAGRAM_SIZE);
 			
-			/*try 
+			try 
 			{
 				// Receive a datagram from a client
 				socket.receive(clientPacket);
@@ -149,25 +149,19 @@ public class ListenSocket extends Thread
 				
 				clientData.setTime(dateFormat.format(cal.getTime()));
 				
-				// Parse the client message
-				parseMessage(clientData, clientMessage); */
+				System.out.println("Data received from " + clientData.getIP());
 				
-				clientData = new Message("127.0.0.1");
-				clientData.setId("5");
-				clientData.setLatitude("49");
-				clientData.setLongitude("-123");
-				clientData.setTime("March 13");
+				// Parse the client message
+				parseMessage(clientData, clientMessage);
 				
 				// Save the client data to the xml file
 				saveData(clientData);
-				
-				done = true;
-			/*}
+			}
 			catch (IOException e) 
 			{
 				e.printStackTrace();
 				break;
-			}*/
+			}
 		}
 		
 		// Close socket
@@ -206,7 +200,7 @@ public class ListenSocket extends Thread
 		cData.setLatitude(msg.substring(0, msg.indexOf('`')));
 		msg = msg.substring(msg.indexOf('`') + 1, msg.length());
 
-		cData.setLongitude(msg.substring(0, msg.length()));
+		cData.setLongitude(msg.substring(0, msg.indexOf('`')));
 	}
 	
 	
