@@ -48,10 +48,7 @@ public class MainActivity extends ActionBarActivity {
                 + '`'
                 + l.getLatitude()
                 + '`'
-                + l.getLongitude()
-                + '`'
-                + l.getTime()
-                ;
+                + l.getLongitude();
 
         return msg;
     }
@@ -85,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
                 protected void onProgressUpdate(String... progress) {
                     Toast.makeText(MainActivity.this, progress[0], Toast.LENGTH_LONG).show();
                 }
-            };
+            }.execute();
         }
 
         @Override
