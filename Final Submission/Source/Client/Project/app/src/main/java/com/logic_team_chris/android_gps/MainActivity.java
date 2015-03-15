@@ -21,9 +21,9 @@
 --
 -- REVISIONS: (Date and Description)
 --
--- DESIGNER: Melvin Loho
+-- DESIGNER: Melvin Loho, Jonathan Chu
 --
--- PROGRAMMER: Melvin Loho
+-- PROGRAMMER: Melvin Loho, Jonathan Chu
 --
 -- NOTES: The client sends UDP datagrams to inform the server of its new location. The client's
 -- location is updated every 5 seconds or less.
@@ -76,9 +76,9 @@ public class MainActivity extends ActionBarActivity {
     --
     -- REVISIONS: (Date and Description)
     --
-    -- DESIGNER: Melvin Loho
+    -- DESIGNER: Melvin Loho, Jonathan Chu
     --
-    -- PROGRAMMER: Melvin Loho
+    -- PROGRAMMER: Melvin Loho, Jonathan Chu
     --
     -- INTERFACE: public String createMessage(Location l);
     --
@@ -110,9 +110,9 @@ public class MainActivity extends ActionBarActivity {
     --
     -- REVISIONS: (Date and Description)
     --
-    -- DESIGNER: Melvin Loho
+    -- DESIGNER: Melvin Loho, Jonathan Chu
     --
-    -- PROGRAMMER: Melvin Loho
+    -- PROGRAMMER: Melvin Loho, Jonathan Chu
     --
     -- INTERFACE: protected void onCreate(Bundle savedInstanceState);
     --
@@ -138,9 +138,9 @@ public class MainActivity extends ActionBarActivity {
     --
     -- REVISIONS: (Date and Description)
     --
-    -- DESIGNER: Melvin Loho
+    -- DESIGNER: Melvin Loho, Jonathan Chu
     --
-    -- PROGRAMMER: Melvin Loho
+    -- PROGRAMMER: Melvin Loho, Jonathan Chu
     --
     -- INTERFACE: public void startLocationServices(View v);
     --
@@ -162,9 +162,9 @@ public class MainActivity extends ActionBarActivity {
     --
     -- REVISIONS: (Date and Description)
     --
-    -- DESIGNER: Melvin Loho
+    -- DESIGNER: Melvin Loho, Jonathan Chu
     --
-    -- PROGRAMMER: Melvin Loho
+    -- PROGRAMMER: Melvin Loho, Jonathan Chu
     --
     -- INTERFACE: public void onConnect(View v);
     --
@@ -248,9 +248,9 @@ public class MainActivity extends ActionBarActivity {
         --
         -- REVISIONS: (Date and Description)
         --
-        -- DESIGNER: Melvin Loho
+        -- DESIGNER: Melvin Loho, Jonathan Chu
         --
-        -- PROGRAMMER: Melvin Loho
+        -- PROGRAMMER: Melvin Loho, Jonathan Chu
         --
         -- INTERFACE: public void onLocationChanged(Location l);
         --
